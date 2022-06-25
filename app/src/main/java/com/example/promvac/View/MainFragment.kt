@@ -12,6 +12,11 @@ import androidx.lifecycle.Observer
 import com.example.promvac.R
 import com.example.promvac.ViewModel.MainViewModel
 import com.example.promvac.databinding.FragmentMainBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import com.example.promvac.Model.Vaccines as Vaccines
 
 class MainFragment : Fragment() {
@@ -40,11 +45,19 @@ class MainFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         // TODO: Use the ViewModel
 
+
         binding.astra.setOnClickListener {
-            viewModel.updateText(1)
+            //CoroutineScope can contain: Main(main thread), IO(input/output thread), Default(for heavy computation)
+            CoroutineScope(Main).launch {
+                viewModel.updateText(1)
+            }
+
         }
         binding.pfizer.setOnClickListener {
-            viewModel.updateText(2)
+            CoroutineScope(Main).launch {
+                viewModel.updateText(2)
+            }
+
         }
 
         viewModel.vaccinesList.observe(viewLifecycleOwner) {
