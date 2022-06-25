@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">PromVac</string>
+    <string name="button_astra">Astra Here!</string>
+    <string name="button_pfizer">Pfizer Here!</string>
+</resources>
