@@ -1,3 +1,7 @@
 package com.example.promvac.Model
 
-data class Patients(val patientID:Int,val vaccineChosen:Vaccines)
+import java.time.LocalDate
+import java.util.*
+
+data class Patients(
+    var patientName: String?, var firstDoseDate: Vaccines?, var secondDoseDate:Vaccines?,)
