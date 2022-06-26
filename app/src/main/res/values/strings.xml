@@ -5,8 +5,8 @@
     <string name="view_my_appointment">View My Appointment</string>
     <string name="id">ID:</string>
     <string name="covid_19_vaccine">Covid-19 Vaccine</string>
-    <string name="received_date">Received Date:</string>
-    <string name="hospital">Hospital:</string>
-    <string name="dose_number">Dose number:</string>
-    <string name="vaccine_name">Vaccine name:</string>
+    <string name="received_date">Received Date: %s</string>
+    <string name="hospital">Hospital: %s</string>
+    <string name="dose_number">Dose number: %d</string>
+    <string name="vaccine_name">Vaccine name: %s</string>
 </resources>

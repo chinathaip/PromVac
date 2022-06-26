@@ -3,12 +3,14 @@ package com.example.promvac.View
 import android.app.FragmentTransaction.TRANSIT_FRAGMENT_OPEN
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.FragmentTransaction
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.promvac.R
 import com.example.promvac.ViewModel.ViewAppointmentViewModel
 import com.example.promvac.databinding.FragmentViewAppointmentBinding
@@ -37,21 +39,22 @@ class ViewAppointmentFragment : Fragment() {
 
 
         binding.BtnClickSearch.setOnClickListener {
-            val patientAppointmentFragment = PatientAppointmentFragment() //create new instance of the new fragment
             try{//prevent null input from users
-                patientAppointmentFragment.arguments=Bundle(1).apply{
-                    //pass value from userinput to another fragment (patientAppointmentFragment)
-                    putInt("PatientID",Integer.parseInt(binding.editTextTextPersonName.text.toString()))
-                }
-                childFragmentManager.beginTransaction()
-                    .replace(binding.patientInfoFragment.id,patientAppointmentFragment)
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .commitNow()
+                viewModel.updateRecyclerView(Integer.parseInt(binding.editTextTextPersonName.text.toString()))
             }catch (e: NumberFormatException){
                 Toast.makeText(context,"The entered value cannot be converted to integer",Toast.LENGTH_SHORT).show()
             }
-
         }
+
+        var adapter=VaccinesHistoryRVadapter(viewModel.list)
+        viewModel.vaccineOfPatient.observe(viewLifecycleOwner){
+            Log.i("LOL",it.toString())
+            adapter.vaccineList=it
+            adapter.notifyDataSetChanged()
+        }
+
+        binding.RVvaccineHistory.adapter=adapter
+        binding.RVvaccineHistory.layoutManager=LinearLayoutManager(context)
 
 
 
