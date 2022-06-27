@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey"
+    android:orientation="vertical"
+    tools:context=".View.showVaccineFragment">
+
+    <TextView
+        android:id="@+id/patientName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/greetPatient"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="34sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/vaccineHistoryRV"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/patientName">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+</RelativeLayout>

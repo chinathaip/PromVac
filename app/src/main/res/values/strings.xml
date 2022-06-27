@@ -2,4 +2,12 @@
     <string name="app_name">PromVac</string>
     <string name="button_astra">Astra Here!</string>
     <string name="button_pfizer">Pfizer Here!</string>
+    <string name="view_my_appointment">View My Appointment</string>
+    <string name="id">ID:</string>
+    <string name="covid_19_vaccine">Covid-19 Vaccine</string>
+    <string name="received_date">Received Date: %s/%s/%s</string>
+    <string name="hospital">Hospital: %s</string>
+    <string name="dose_number">Dose number: %d</string>
+    <string name="vaccine_name">Vaccine name: %s</string>
+    <string name="greetPatient">Hello! %s</string>
 </resources>
