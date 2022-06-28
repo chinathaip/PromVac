@@ -70,6 +70,7 @@
                 android:textSize="20sp" />
 
             <RadioGroup
+                android:id="@+id/vaccineGroup"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"
@@ -79,6 +80,7 @@
                     android:id="@+id/btnAstra"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:checked="true"
                     android:text="Astrazeneca"
                     android:textColor="@color/white" />
 
