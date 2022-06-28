@@ -10,4 +10,10 @@
     <string name="dose_number">Dose number: %d</string>
     <string name="vaccine_name">Vaccine name: %s</string>
     <string name="greetPatient">Hello! %s</string>
+    <string-array name="listOfHospitals">
+        <item>Bangkok Hospital</item>
+        <item>Samitivej Hospital</item>
+        <item>Yanhee Hospital</item>
+        <item>Vichaiyut Hospital</item>
+    </string-array>
 </resources>

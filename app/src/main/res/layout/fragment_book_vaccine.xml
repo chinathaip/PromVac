@@ -1,13 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/grey"
     tools:context=".View.BookVaccineFragment">
 
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+        android:layout_height="match_parent">
 
-</FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/TVtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:text="Book your appointment"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="34sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/TVname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="false"
+                    android:layout_marginLeft="83dp"
+                    android:layout_marginTop="25dp"
+                    android:text="Name:"
+                    android:textColor="@color/white" />
+
+                <EditText
+                    android:id="@+id/inputName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="83dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_toRightOf="@id/TVname"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:text="Name"
+                    android:textColor="@color/white" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/TVchoosevac"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:layout_weight="1"
+                android:text="Choose your vaccine"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="15dp">
+
+                <RadioButton
+                    android:id="@+id/btnAstra"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Astrazeneca"
+                    android:textColor="@color/white" />
+
+                <RadioButton
+                    android:id="@+id/btnPfiz"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Pfizer"
+                    android:textColor="@color/white" />
+
+                <RadioButton
+                    android:id="@+id/btnSinovac"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Sinovac"
+                    android:textColor="@color/white" />
+
+                <RadioButton
+                    android:id="@+id/btnJohn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Johnson"
+                    android:textColor="@color/white" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/TVpickdate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:layout_weight="1"
+                android:text=" Pick a date for your appointment"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <DatePicker
+                android:id="@+id/inputDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="15dp"
+                android:background="@color/white"
+                android:datePickerMode="calendar" />
+
+            <TextView
+                android:id="@+id/TVchooseHospital"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:layout_weight="1"
+                android:text="Choose a hospital"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <Spinner
+                android:id="@+id/inputHospital"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:background="@android:drawable/btn_dropdown"
+                android:entries="@array/listOfHospitals"
+                android:spinnerMode="dropdown" />
+
+            <Button
+                android:id="@+id/btnSubmit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="15dp"
+                android:backgroundTint="@color/orange"
+                android:text="submit"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>
