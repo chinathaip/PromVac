@@ -49,6 +49,8 @@ class BookVaccineViewModel : ViewModel() {
         return Vaccines(vacName,firstDoseDate,hospital)
     }
 
+
+    //TODO: one click causes 999999 writes to the database
     fun getCurrentPatientID(callBack:(Int?)->Unit)= CoroutineScope(IO).launch {
 
         db.collection("patients").get().addOnSuccessListener {

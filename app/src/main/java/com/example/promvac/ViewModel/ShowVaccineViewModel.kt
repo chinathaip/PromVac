@@ -5,14 +5,20 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.promvac.Model.Patients
 import com.example.promvac.Model.Vaccines
+import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.getField
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.sql.Timestamp
 import java.util.*
+import kotlin.reflect.KClass
+import kotlin.reflect.cast
 
 class ShowVaccineViewModel : ViewModel() {
     // TODO: Implement the ViewModel
+
 
     private val db = FirebaseFirestore.getInstance()
 
@@ -43,32 +49,29 @@ class ShowVaccineViewModel : ViewModel() {
             val patientQuery=patientsDB.document(patientID.toString())
             val patient= Patients(null,null,null)
             patientQuery.get().addOnSuccessListener { query->
+
                 query.getString("patientName").let{name->patient.patientName=name}
 
-                //get first dose data
-                db.collection("/patients/$patientID/firstDose").document("1").let{
-                    it.addSnapshotListener{queryResult, _ ->
-                        val vaccineName = queryResult?.getString("VaccineName")
-                        val receivedDate = queryResult?.getDate("ReceivedDate")
-                        val hospital = queryResult?.getString("Hospital")
-                        val patientFirstDose = Vaccines(vaccineName,receivedDate,hospital)
-                        patient.firstDoseDate=patientFirstDose
-                    }
+                val firstDoseQuery = query.get("firstDoseDate") as Map<String,*>
+                with(firstDoseQuery){
 
-                    //follow by second dose data
-                    db.collection("/patients/$patientID/SecondDose").document("2").let {
-                        it.addSnapshotListener{queryResult, _ ->
-                            val vaccineName = queryResult?.getString("VaccineName")
-                            val receivedDate = queryResult?.getDate("ReceivedDate")
-                            val hospital = queryResult?.getString("Hospital")
-                            val patientSecondtDose = Vaccines(vaccineName,receivedDate,hospital)
-                            patient.secondDoseDate=patientSecondtDose
-                            callBack(patient) //run callback function here
+                    val vaccineName = this.get("vacName") as String
+                    val hospitalName = this.get("hospital")as String
+                    val rawDate = this.get("date") as com.google.firebase.Timestamp
+                    val appointedDate= rawDate.toDate()
+                    val firstDose = Vaccines(vaccineName,appointedDate,hospitalName)
+                    patient.firstDoseDate=firstDose
+                }
 
-                        }
-
-                    }
-
+                val secondDoseQuery = query.get("secondDoseDate") as Map<String?,*>
+                with(firstDoseQuery){
+                    val vaccineName = this.get("vacName") as String
+                    val hospitalName = this.get("hospital")as String
+                    val rawDate = this.get("date") as com.google.firebase.Timestamp
+                    val appointedDate= rawDate.toDate()
+                    val secondDose = Vaccines(vaccineName,appointedDate,hospitalName)
+                    patient.secondDoseDate=secondDose
+                    callBack(patient)
                 }
             }
             patientQuery.get().addOnFailureListener{
