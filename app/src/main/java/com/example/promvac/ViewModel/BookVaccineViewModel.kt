@@ -24,13 +24,15 @@ class BookVaccineViewModel : ViewModel() {
         CoroutineScope(IO).launch {
 
             val newPatient = Patients(patientName,firstDose,secondDose)
-            var patientID:Int? = 0
-//            getCurrentPatientID{ patientID=it }
-//
-            db.collection("patient").document("1").set(newPatient)
+            var nextPatientID:Int? = 0
+            getCurrentPatientID{currentID ->
+                nextPatientID=currentID?.plus(1) //+1 so we write new data into the next document without overwriting
+                Log.i("LOL","After: $nextPatientID")
+                db.collection("patient").document(nextPatientID.toString()).set(newPatient)
                 .addOnSuccessListener { Log.i("LOL","SUCCESS") }
                 .addOnFailureListener{Log.i("LOL","Failed $it")}
 
+            }
         }
 
     fun createVaccine(vaccineName:String,firstDoseDate:Date,hospital:String):Vaccines{
@@ -46,12 +48,12 @@ class BookVaccineViewModel : ViewModel() {
     }
 
 
-//    //create new variable and assign the patientID to it in the lambda
-//    fun getCurrentPatientID(callBack:(Int?)->Unit)= CoroutineScope(IO).launch {
-//
-//        db.collection("patient").get().addOnSuccessListener {
-//            Log.i("LOL",it.size().toString())
-//            callBack(it.size()+1)
-//        }
-//    }
+    //create new variable and assign the patientID to it in the lambda
+    fun getCurrentPatientID(callBack:(Int?)->Unit)= CoroutineScope(IO).launch {
+
+        db.collection("patient").get().addOnSuccessListener {
+            Log.i("LOL",it.size().toString())
+            callBack(it.size())
+        }
+    }
 }
