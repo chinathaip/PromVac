@@ -2,6 +2,7 @@ package com.example.promvac.View
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -41,16 +42,16 @@ class BookVaccineFragment : Fragment() {
             val calendar= binding.inputDate
             val firstDoseDate= Date(calendar.year-1900,calendar.month,calendar.dayOfMonth)
             val chosenHospital = binding.inputHospital.selectedItem.toString()
-            chosenVaccine.let{vaccineName->
+            val firstVac = chosenVaccine.let{vaccineName->
                 viewModel.createVaccine(vaccineName,firstDoseDate,chosenHospital)
-            }.run{
+            }
+            val secondDoseDate = Date(calendar.year-1900,calendar.month+3,calendar.dayOfMonth)
+            val secondVac = Vaccines(firstVac.vacName,secondDoseDate,firstVac.hospital)
                 //this = first dose vaccine created from .let{}
                 //we take booster dose every 3 months, so we do month + 3 for the next appointment
-                val secondDoseDate = Date(calendar.year-1900,calendar.month+3,calendar.dayOfMonth)
-                val secondDose = Vaccines(this.vacName,secondDoseDate,this.hospital)
-                viewModel.createNewAppointment(patientName,this,secondDose)
-            }
+            viewModel.createNewAppointment(patientName,firstVac,secondVac)
 
+            Log.i("LOL","A button is clicked")
 //            viewModel.updateCurrentPatientID()
 
         }

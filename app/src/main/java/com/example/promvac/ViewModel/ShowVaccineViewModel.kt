@@ -3,6 +3,7 @@ package com.example.promvac.ViewModel
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.promvac.Model.FirestoreDatabase
 import com.example.promvac.Model.Patients
 import com.example.promvac.Model.Vaccines
 import com.google.firebase.firestore.FieldPath
@@ -20,7 +21,7 @@ class ShowVaccineViewModel : ViewModel() {
     // TODO: Implement the ViewModel
 
 
-    private val db = FirebaseFirestore.getInstance()
+    private val db = FirestoreDatabase.getInstance()
 
     private val _vaccineOfPatient = MutableLiveData<ArrayList<Vaccines?>>()
 
@@ -33,7 +34,7 @@ class ShowVaccineViewModel : ViewModel() {
     //Vaccines("Johnson",Date(12),"Yanhee")
 
     fun updateRecyclerView(patientID:Int?){
-        getFromDB("patients",patientID){ patient ->
+        getFromDB("patient",patientID){ patient ->
             Log.i("LOL",patient.patientName.toString())
             list = arrayListOf(patient.firstDoseDate,patient.secondDoseDate)
             vaccineOfPatient.postValue(list)
@@ -52,23 +53,23 @@ class ShowVaccineViewModel : ViewModel() {
 
                 query.getString("patientName").let{name->patient.patientName=name}
 
-                val firstDoseQuery = query.get("firstDoseDate") as Map<String,*>
+                val firstDoseQuery = query.get("firstDoseDate") as Map<String,*>?
                 with(firstDoseQuery){
 
-                    val vaccineName = this.get("vacName") as String
-                    val hospitalName = this.get("hospital")as String
-                    val rawDate = this.get("date") as com.google.firebase.Timestamp
-                    val appointedDate= rawDate.toDate()
+                    val vaccineName = this?.get("vacName") as String?
+                    val hospitalName = this?.get("hospital")as String?
+                    val rawDate = this?.get("date") as com.google.firebase.Timestamp?
+                    val appointedDate= rawDate?.toDate()
                     val firstDose = Vaccines(vaccineName,appointedDate,hospitalName)
                     patient.firstDoseDate=firstDose
                 }
 
-                val secondDoseQuery = query.get("secondDoseDate") as Map<String?,*>
-                with(firstDoseQuery){
-                    val vaccineName = this.get("vacName") as String
-                    val hospitalName = this.get("hospital")as String
-                    val rawDate = this.get("date") as com.google.firebase.Timestamp
-                    val appointedDate= rawDate.toDate()
+                val secondDoseQuery = query.get("secondDoseDate") as Map<String,*>?
+                with(secondDoseQuery){
+                    val vaccineName = this?.get("vacName") as String?
+                    val hospitalName = this?.get("hospital")as String?
+                    val rawDate = this?.get("date") as com.google.firebase.Timestamp?
+                    val appointedDate= rawDate?.toDate()
                     val secondDose = Vaccines(vaccineName,appointedDate,hospitalName)
                     patient.secondDoseDate=secondDose
                     callBack(patient)

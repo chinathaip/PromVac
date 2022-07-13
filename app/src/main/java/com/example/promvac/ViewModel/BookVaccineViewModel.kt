@@ -2,6 +2,7 @@ package com.example.promvac.ViewModel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import com.example.promvac.Model.FirestoreDatabase
 import com.example.promvac.Model.Patients
 import com.example.promvac.Model.Vaccines
 import com.google.firebase.firestore.FirebaseFirestore
@@ -10,30 +11,25 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import java.util.*
+import kotlin.coroutines.coroutineContext
 
 class BookVaccineViewModel : ViewModel() {
     // TODO: Implement the ViewModel
 
-    private val db= FirebaseFirestore.getInstance()
+    private val db= FirestoreDatabase.getInstance()
 
 
 
     fun createNewAppointment(patientName:String,firstDose:Vaccines,secondDose:Vaccines)=
         CoroutineScope(IO).launch {
+
             val newPatient = Patients(patientName,firstDose,secondDose)
-            var patientID = getCurrentPatientID{
-                val patientAttribute = db.collection("patients").document(it.toString())
-
-                patientAttribute.set(newPatient).let {
-                    it.addOnSuccessListener {
-                        Log.i("LOL","Success")
-                    }
-                    it.addOnFailureListener{
-                        Log.i("LOL","Error $it")
-                    }
-                }
-            }
-
+            var patientID:Int? = 0
+//            getCurrentPatientID{ patientID=it }
+//
+            db.collection("patient").document("1").set(newPatient)
+                .addOnSuccessListener { Log.i("LOL","SUCCESS") }
+                .addOnFailureListener{Log.i("LOL","Failed $it")}
 
         }
 
@@ -50,12 +46,12 @@ class BookVaccineViewModel : ViewModel() {
     }
 
 
-    //TODO: one click causes 999999 writes to the database
-    fun getCurrentPatientID(callBack:(Int?)->Unit)= CoroutineScope(IO).launch {
-
-        db.collection("patients").get().addOnSuccessListener {
-            Log.i("LOL",it.size().toString())
-            callBack(it.size()+1)
-        }
-    }
+//    //create new variable and assign the patientID to it in the lambda
+//    fun getCurrentPatientID(callBack:(Int?)->Unit)= CoroutineScope(IO).launch {
+//
+//        db.collection("patient").get().addOnSuccessListener {
+//            Log.i("LOL",it.size().toString())
+//            callBack(it.size()+1)
+//        }
+//    }
 }

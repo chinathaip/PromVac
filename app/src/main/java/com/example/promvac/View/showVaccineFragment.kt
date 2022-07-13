@@ -51,7 +51,7 @@ class showVaccineFragment : Fragment() {
         val linearLayoutManager=LinearLayoutManager(this.context)
 
         viewModel.vaccineOfPatient.observe(viewLifecycleOwner){
-            Log.i("LOL",it.toString())
+            Log.i("LOL","LiveData ${it.toString()}")
             adapter.vaccineList=it
             adapter.notifyDataSetChanged()
         }
